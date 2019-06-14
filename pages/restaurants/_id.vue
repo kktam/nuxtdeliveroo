@@ -32,7 +32,7 @@
                 Total: ${{ price }}
               </h5>
               <p v-if="!selectedDishes.length">Please select some items.</p>
-              <button :disabled="!selectedDishes.length" class="btn btn-primary">Order</button>
+              <button :disabled="!selectedDishes.length" class="btn btn-primary" @click="goToCheckout">Order</button>
             </div>
           </div>
         </div>
@@ -104,7 +104,16 @@ export default {
       addToCart: 'cart/add',
       removeFromCart: 'cart/remove',
       emptyCart: 'cart/emptyList'
-    })
+    }),
+    goToCheckout() {
+      // Redirect to signin page if not logged in.
+      const isConnected = this.$store.getters['auth/username']
+      if (!isConnected) {
+        this.$router.push('/signin')
+        return
+      }
+      this.$router.push('/checkout')
+    }
   }
 }
 </script>
